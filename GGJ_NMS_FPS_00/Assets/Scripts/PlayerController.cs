@@ -62,6 +62,7 @@ namespace EvolveGames
         float installGravity;
         bool WallDistance;
         [HideInInspector] public float WalkingValue;
+
         void Start()
         {
             characterController = GetComponent<CharacterController>();
@@ -75,6 +76,7 @@ namespace EvolveGames
             RunningValue = RuningSpeed;
             installGravity = gravity;
             WalkingValue = walkingSpeed;
+            
         }
 
         void Update()
@@ -98,7 +100,6 @@ namespace EvolveGames
 
             if (Input.GetButton("Jump") && canMove && characterController.isGrounded && !isClimbing)
             {
-                Debug.Log("jumped");
                 moveDirection.y = jumpSpeed;
             }
             else

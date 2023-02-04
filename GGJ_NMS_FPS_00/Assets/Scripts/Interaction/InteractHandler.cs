@@ -1,13 +1,24 @@
 using UnityEngine;
+using Managers;
 
 namespace Interactions
 {
     public class InteractHandler : MonoBehaviour
     {
         [SerializeField] LayerMask interactableLayerMask;
-        [SerializeField] Camera characterCamera;
+        Camera characterCamera;
 
         IInteractable interactable;
+
+        private void Start()
+        {
+            Init();
+        }
+
+        public void Init()
+        {
+            characterCamera = GameManager.Instance.CharecterCamera;
+        }
 
         private void Update()
         {
