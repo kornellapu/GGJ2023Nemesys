@@ -22,6 +22,9 @@ namespace Interactions
 
         private void Update()
         {
+            if (GameManager.Instance.CurrentState == GameManager.GameState.GameOver)
+                return;
+
             RaycastHit hit;
 
             if (Physics.Raycast(characterCamera.transform.position, characterCamera.transform.forward, out hit, 10, interactableLayerMask))

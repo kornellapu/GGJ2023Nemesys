@@ -556,8 +556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0febf098c89444746b0c2a5a31cd6b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charecterCamera: {fileID: 151617531429236273}
-  cameraFade: {fileID: 0}
+  Player: {fileID: 359367499}
+  PlayerController: {fileID: 151617530041010824}
+  CharecterCamera: {fileID: 151617531429236273}
 --- !u!4 &126379830
 Transform:
   m_ObjectHideFlags: 0
