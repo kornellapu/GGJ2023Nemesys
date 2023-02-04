@@ -6,93 +6,106 @@ using UnityEngine.Events;
 
 namespace Managers
 {
-    public class OxygenManager : Singleton<OxygenManager>
-    {
-        public enum OxygenUsageState
-        {
-            IDLE,
-            WALK,
-            RUN
-        }
+	public class OxygenManager : Singleton<OxygenManager>
+	{
+		public enum OxygenUsageState
+		{
+			IDLE,
+			WALK,
+			RUN
+		}
 
-        public UnityAction<float> OnChargeCanceld;
-        public UnityAction OnExitSafeZone;
-        public UnityAction OnEnterSafeZone;
+		public UnityAction<float> OnChargeCanceld;
+		public UnityAction OnExitSafeZone;
+		public UnityAction OnEnterSafeZone;
 
-        private bool stopCharge;
-        private float oxygenUsage;
+		[HideInInspector] public bool inSaveZone = true;
 
-        private Player player;
+		private bool stopCharge;
+		private float oxygenUsage;
 
-        public void Init()
-        {
-            player = GameManager.Instance.Player;
-            stopCharge = false;
+		private Player player;
 
-            OnExitSafeZone += () => StartCoroutine(IEUseOxygen());
-            OnEnterSafeZone += () => StopCoroutine(IEUseOxygen());
+		public void Init()
+		{
+			player = GameManager.Instance.Player;
+			stopCharge = false;
 
-            SetOxygenUsage(OxygenUsageState.IDLE);
-            OnExitSafeZone.Invoke();
-        }
+			OnExitSafeZone += () => { if (inSaveZone) StartCoroutine(IEUseOxygen()); };
+			OnEnterSafeZone += () => { inSaveZone = true; StopAllCoroutines(); };
 
-        public void SetOxygenUsage(OxygenUsageState state)
-        {
-            switch (state)
-            {
-                case OxygenUsageState.IDLE:
-                    oxygenUsage = 0.001f;
-                    break;
-                case OxygenUsageState.WALK:
-                    oxygenUsage = 0.005f;
-                    break;
-                case OxygenUsageState.RUN:
-                    oxygenUsage = 0.01f;
-                    break;
-                default:
-                    oxygenUsage = 0.001f;
-                    break;
-            }
-        }
+			SetOxygenUsage(OxygenUsageState.IDLE);
+			StartCoroutine(IEUseOxygen());
+		}
 
-        public void StartChargingOxygenBar(float maxAmount)
-        {
-            if (maxAmount == 0)
-                return;
-            StartCoroutine(IEChargeOxygenBar(maxAmount));
-            OnEnterSafeZone.Invoke();
-        }
+		public void SetOxygenUsage(OxygenUsageState state)
+		{
+			switch (state)
+			{
+				case OxygenUsageState.IDLE:
+					oxygenUsage = 0.001f;
+					break;
+				case OxygenUsageState.WALK:
+					oxygenUsage = 0.005f;
+					break;
+				case OxygenUsageState.RUN:
+					oxygenUsage = 0.01f;
+					break;
+				default:
+					oxygenUsage = 0.001f;
+					break;
+			}
+		}
 
-        public void StopChargingOxygenBar()
-        {
-            stopCharge = true;
-        }
+		public void StartChargingOxygenBar(float maxAmount)
+		{
+			if (maxAmount == 0)
+				return;
+			StartCoroutine(IEChargeOxygenBar(maxAmount));
+			OnEnterSafeZone.Invoke();
+		}
 
-        private IEnumerator IEChargeOxygenBar(float maxAmount)
-        {
-            while (player.IncreaseOxygenLevelByValue(0.1f) && maxAmount > 0.0f && !stopCharge)
-            {
-                maxAmount -= 0.1f;
-                yield return new WaitForSeconds(0.01f);
-            }
+		public void StopChargingOxygenBar()
+		{
+			stopCharge = true;
+		}
 
-            stopCharge = false;
-            OnChargeCanceld.Invoke(maxAmount);
-            OnExitSafeZone.Invoke();
-        }
-        private IEnumerator IEUseOxygen()
-        {
-            
-            yield return new WaitForSeconds(2);
-            while (player.IncreaseOxygenLevelByValue(-oxygenUsage))
-            {
-                yield return new WaitForSeconds(0.01f);
-            }
+		public void EnterSafeZone()
+		{
+			OnEnterSafeZone.Invoke();
+		}
 
-            Debug.Log("oxygen level");
-            //start death event on out of oxygen
-            GameManager.Instance.OnGameOver.Invoke();
-        }
-    }
+		public void ExitSafeZone()
+		{
+			OnExitSafeZone.Invoke();
+		}
+
+		private IEnumerator IEChargeOxygenBar(float maxAmount)
+		{
+			while (player.IncreaseOxygenLevelByValue(0.1f) && maxAmount > 0.0f && !stopCharge)
+			{
+				maxAmount -= 0.1f;
+				yield return new WaitForSeconds(0.01f);
+			}
+
+			stopCharge = false;
+			OnChargeCanceld.Invoke(maxAmount);
+			OnExitSafeZone.Invoke();
+		}
+		private IEnumerator IEUseOxygen()
+		{
+			Debug.Log("startcorrutine");
+
+			inSaveZone = false;
+			yield return new WaitForSeconds(2);
+
+			while (player.IncreaseOxygenLevelByValue(-oxygenUsage))
+			{
+				yield return new WaitForSeconds(0.01f);
+			}
+
+			GameManager.Instance.OnGameOver.Invoke();
+		}
+	}
 
 }
