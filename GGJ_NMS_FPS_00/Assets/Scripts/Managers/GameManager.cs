@@ -8,6 +8,7 @@ namespace Managers
     public class GameManager : Singleton<GameManager>
     {
         public Player Player { get; private set; }
+        public Camera charecterCamera;
 
         private void Start()
         {
