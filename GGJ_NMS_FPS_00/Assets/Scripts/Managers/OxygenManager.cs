@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,6 +88,10 @@ namespace Managers
             {
                 yield return new WaitForSeconds(0.01f);
             }
+
+            Debug.Log("oxygen level");
+            //start death event on out of oxygen
+            GameManager.Instance.OnGameOver.Invoke();
         }
     }
 

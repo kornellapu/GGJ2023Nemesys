@@ -1,3 +1,4 @@
+using EvolveGames;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,8 +8,13 @@ namespace Managers
 {
     public class GameManager : Singleton<GameManager>
     {
-        public Player Player { get; private set; }
-        public Camera charecterCamera;
+        public Player Player;
+        public PlayerController PlayerController;
+        public Camera CharecterCamera;
+
+		public UnityAction OnGameOver;
+
+		private CameraFade cameraFade;
 
         private void Start()
         {
@@ -16,6 +22,14 @@ namespace Managers
                 Player = GameObject.Find("Player").GetComponent<Player>();
 
             OxygenManager.Instance.Init();
+            cameraFade = CharecterCamera.GetComponent<CameraFade>();
+            OnGameOver += () => GameOver();
+        }
+
+        private void GameOver()
+        {
+            cameraFade.StartDeathAnimation();
+            PlayerController.canMove = false;
         }
     }
 }

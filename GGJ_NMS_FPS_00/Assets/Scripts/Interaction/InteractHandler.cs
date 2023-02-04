@@ -17,7 +17,7 @@ namespace Interactions
 
         public void Init()
         {
-            characterCamera = GameManager.Instance.charecterCamera;
+            characterCamera = GameManager.Instance.CharecterCamera;
         }
 
         private void Update()
