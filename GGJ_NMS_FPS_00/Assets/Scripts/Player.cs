@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [Header("References/Variables")]
     [SerializeField] int maxOxygenLevel = 100;
 
-    [Range(0,100)]
+    [Range(0, 100)]
     [SerializeField] float oxygenLevel;
 
 
@@ -41,6 +41,6 @@ public class Player : MonoBehaviour
     public bool IncreaseOxygenLevelByValue(float value)
     {
         Slider_Oxygen.value += value;
-        return oxygenLevel < maxOxygenLevel;
+        return oxygenLevel < maxOxygenLevel && oxygenLevel > 0;
     }
 }

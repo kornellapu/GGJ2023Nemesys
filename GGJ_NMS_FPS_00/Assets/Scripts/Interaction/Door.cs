@@ -23,16 +23,15 @@ public class Door : MonoBehaviour, IInteractable
     {
         if (isInteracting)
             return;
-        Debug.Log($"Interacted with {gameObject.name}");
         Toggle(!isOpen);
+
+        //todo: animation
     }
 
     public void Cancel()
     {
         if (!isInteracting)
             return;
-
-        Debug.Log($"Cancel interaction with {gameObject.name}");
     }
 
     public void Toggle(bool state)
