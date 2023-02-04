@@ -21,7 +21,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.116
+    value: 1
   size:
     overrideState: 1
     value: 0.48
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f6f3f7c722b4544b97e3c75840aa33, type: 3}
   m_Name: AutoExposure
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -213,16 +213,16 @@ MonoBehaviour:
     value: 0
   tint:
     overrideState: 1
-    value: 0
+    value: -3
   colorFilter:
     overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     overrideState: 1
-    value: -1
+    value: 11
   saturation:
     overrideState: 1
-    value: 4
+    value: 10
   brightness:
     overrideState: 0
     value: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
     value: 0
   contrast:
     overrideState: 1
-    value: 14
+    value: 38
   mixerRedOutRedIn:
     overrideState: 1
     value: 102
@@ -251,8 +251,8 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   mixerBlueOutRedIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 15
   mixerBlueOutGreenIn:
     overrideState: 0
     value: 0
@@ -1573,7 +1573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a34fa72bd4185749832024e9c8010bf, type: 3}
   m_Name: ScreenSpaceReflections
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1620,7 +1620,7 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.13
+    value: 0.297
   fastMode:
     overrideState: 1
     value: 0
