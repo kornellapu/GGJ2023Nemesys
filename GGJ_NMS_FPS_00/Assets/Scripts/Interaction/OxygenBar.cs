@@ -21,23 +21,22 @@ public class OxygenBar : MonoBehaviour, IInteractable
         isCharging = false;
         OxygenLevel = 100;
         gameObject.layer = LayerMask.NameToLayer("Interactable");
-        GameManager.Instance.OnChargeCanceld += (float leftOver) => { OxygenLevel -= OxygenLevel-leftOver; };
+        OxygenManager.Instance.OnChargeCanceld += (float leftOver) => { OxygenLevel -= OxygenLevel-leftOver; };
     }
 
     public void Interact()
     {
         if (isToggle)
             return;
-        Debug.Log("interact with oxygenbar");
         Toggle(true);
-        GameManager.Instance.ChargeOxygenBar(OxygenLevel);
+        OxygenManager.Instance.StartChargingOxygenBar(OxygenLevel);
     }
 
     public void Cancel()
     {
         if (!isToggle)
             return;
-        GameManager.Instance.StopChargingOxygenBar();
+        OxygenManager.Instance.StopChargingOxygenBar();
         Toggle(false);
     }
 

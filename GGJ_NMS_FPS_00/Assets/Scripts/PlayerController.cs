@@ -98,6 +98,7 @@ namespace EvolveGames
 
             if (Input.GetButton("Jump") && canMove && characterController.isGrounded && !isClimbing)
             {
+                Debug.Log("jumped");
                 moveDirection.y = jumpSpeed;
             }
             else
@@ -117,8 +118,20 @@ namespace EvolveGames
                 Camera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
                 transform.rotation *= Quaternion.Euler(0, Lookhorizontal * lookSpeed, 0);
 
-                if (isRunning && Moving) cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, RunningFOV, SpeedToFOV * Time.deltaTime);
-                else cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, InstallFOV, SpeedToFOV * Time.deltaTime);
+                 if (Moving && isRunning)
+                 {
+                     Managers.OxygenManager.Instance.SetOxygenUsage(Managers.OxygenManager.OxygenUsageState.RUN);
+                     cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, RunningFOV, SpeedToFOV * Time.deltaTime);
+                 }
+                 else
+                 {
+                     if(Moving)
+                         Managers.OxygenManager.Instance.SetOxygenUsage(Managers.OxygenManager.OxygenUsageState.WALK);
+                     else
+                         Managers.OxygenManager.Instance.SetOxygenUsage(Managers.OxygenManager.OxygenUsageState.IDLE);
+
+                     cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, InstallFOV, SpeedToFOV * Time.deltaTime);
+                 }
             }
 
             if (Input.GetKey(CroughKey))
