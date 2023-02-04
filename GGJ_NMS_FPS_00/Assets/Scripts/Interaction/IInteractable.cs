@@ -6,6 +6,8 @@ namespace Interactions
     {
         public void Interact();
 
+        public void Cancel();
+
         public void Toggle(bool state);
     } 
 }
