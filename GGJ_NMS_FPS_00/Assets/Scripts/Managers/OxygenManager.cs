@@ -40,16 +40,16 @@ namespace Managers
             switch (state)
             {
                 case OxygenUsageState.IDLE:
-                    oxygenUsage = 0.01f;
+                    oxygenUsage = 0.001f;
                     break;
                 case OxygenUsageState.WALK:
-                    oxygenUsage = 0.05f;
+                    oxygenUsage = 0.005f;
                     break;
                 case OxygenUsageState.RUN:
-                    oxygenUsage = 0.1f;
+                    oxygenUsage = 0.01f;
                     break;
                 default:
-                    oxygenUsage = 0.01f;
+                    oxygenUsage = 0.001f;
                     break;
             }
         }
@@ -69,10 +69,10 @@ namespace Managers
 
         private IEnumerator IEChargeOxygenBar(float maxAmount)
         {
-            while (player.IncreaseOxygenLevelByValue(0.5f) && maxAmount > 0.0f && !stopCharge)
+            while (player.IncreaseOxygenLevelByValue(0.1f) && maxAmount > 0.0f && !stopCharge)
             {
                 maxAmount -= 0.1f;
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
             }
 
             stopCharge = false;
@@ -85,7 +85,7 @@ namespace Managers
             yield return new WaitForSeconds(2);
             while (player.IncreaseOxygenLevelByValue(-oxygenUsage))
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
             }
         }
     }
