@@ -12,12 +12,14 @@ namespace Managers
 		{
 			IDLE,
 			WALK,
-			RUN
+			RUN,
 		}
 
 		public UnityAction<float> OnChargeCanceld;
 		public UnityAction OnExitSafeZone;
 		public UnityAction OnEnterSafeZone;
+		public UnityAction OnAttack;
+		private bool underAttack;
 
 		[HideInInspector] public bool inSaveZone = true;
 
@@ -30,6 +32,7 @@ namespace Managers
 		{
 			player = GameManager.Instance.Player;
 			stopCharge = false;
+			underAttack = false;
 
 			OnExitSafeZone += () => { if (inSaveZone) StartCoroutine(IEUseOxygen()); };
 			OnEnterSafeZone += () => { inSaveZone = true; StopAllCoroutines(); };
@@ -40,21 +43,27 @@ namespace Managers
 
 		public void SetOxygenUsage(OxygenUsageState state)
 		{
+			float bonusUsage = underAttack ? 0.03f : 0.0f;
 			switch (state)
 			{
 				case OxygenUsageState.IDLE:
-					oxygenUsage = 0.001f;
+					oxygenUsage = 0.001f + bonusUsage;
 					break;
 				case OxygenUsageState.WALK:
-					oxygenUsage = 0.005f;
+					oxygenUsage = 0.005f + bonusUsage;
 					break;
 				case OxygenUsageState.RUN:
-					oxygenUsage = 0.01f;
+					oxygenUsage = 0.01f + bonusUsage;
 					break;
 				default:
 					oxygenUsage = 0.001f;
 					break;
 			}
+		}
+
+		public void SetUnderAttack(bool state)
+		{
+			underAttack = state;
 		}
 
 		public void StartChargingOxygenBar(float maxAmount)
