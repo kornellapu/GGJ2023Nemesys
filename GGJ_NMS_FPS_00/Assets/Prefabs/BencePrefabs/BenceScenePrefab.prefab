@@ -294,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0febf098c89444746b0c2a5a31cd6b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentState: 0
   Player: {fileID: 5039103787639464739}
   PlayerController: {fileID: 0}
   CharecterCamera: {fileID: 0}
@@ -571,7 +572,7 @@ MonoBehaviour:
   Rect_Oxygen: {fileID: 5039103787466706715}
   Slider_Oxygen: {fileID: 5039103787749629310}
   maxOxygenLevel: 100
-  oxygenLevel: 21.7
+  oxygenLevel: 2
 --- !u!1 &5039103787662480387
 GameObject:
   m_ObjectHideFlags: 0
