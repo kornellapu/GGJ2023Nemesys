@@ -8,10 +8,11 @@ using System;
 public class Lever : MonoBehaviour, IInteractable
 {
 	[Header("Trigger Event")]
-	[SerializeField] UnityEvent Event;
+	[SerializeField] UnityEvent[] Events;
 	[SerializeField] GameObject InteractButton;
 	[SerializeField] GameObject[] Lights;
 	[SerializeField] Material[] Materials;
+	[SerializeField] bool disableAfterInteract = false;
 
 	public bool isON { get; private set; }
 	public bool Interactable = true;
@@ -29,9 +30,20 @@ public class Lever : MonoBehaviour, IInteractable
 			return;
 
 		Toggle(!isON);
-		if (Event != null)
-			Event.Invoke();
+		if (Events.Length != 0)
+        {
+			for(int i = 0; i < Events.Length; i++)
+            {
+				if(Events[i] != null)
+                {
+					Events[i].Invoke();
+                }
+            }
+        }
 		SwapMaterial();
+
+		if (disableAfterInteract)
+			Interactable = false;
 	}
 
 	private void SwapMaterial()
