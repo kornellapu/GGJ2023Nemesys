@@ -8,6 +8,14 @@ namespace Managers
 {
     public class GameManager : Singleton<GameManager>
     {
+        public enum GameState
+        {
+            Init,
+            Gameplay,
+            GameOver
+        }
+
+        public GameState CurrentState;
         public Player Player;
         public PlayerController PlayerController;
         public Camera CharecterCamera;
@@ -24,11 +32,13 @@ namespace Managers
             OxygenManager.Instance.Init();
             cameraFade = CharecterCamera.GetComponent<CameraFade>();
             OnGameOver += () => GameOver();
+            CurrentState = GameState.Init;
         }
 
         private void GameOver()
         {
-            cameraFade.StartDeathAnimation();
+			CurrentState = GameState.GameOver;
+			cameraFade.StartDeathAnimation();
             PlayerController.canMove = false;
         }
     }

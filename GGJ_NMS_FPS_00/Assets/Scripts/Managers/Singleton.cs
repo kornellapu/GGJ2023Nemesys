@@ -8,7 +8,9 @@ namespace Managers
 
         protected void Awake()
         {
+            ///Debug.Log(this.gameObject.name);
             if (Instance != null && Instance != this)
+
             {
                 Destroy(this);
                 Debug.Log($" An Instance of Sinleton<T> is already exists!");

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Managers;
 
 namespace EvolveGames
 {
@@ -34,7 +35,10 @@ namespace EvolveGames
         }
         private void Update()
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+			if (GameManager.Instance.CurrentState == GameManager.GameState.GameOver)
+				return;
+
+			if (Input.GetAxis("Mouse ScrollWheel") > 0f)
             {
                 ItemIdInt++;
             }
