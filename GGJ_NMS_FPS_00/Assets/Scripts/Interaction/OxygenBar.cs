@@ -7,7 +7,7 @@ using Managers;
 public class OxygenBar : MonoBehaviour, IInteractable
 {
     public bool isCharging;
-    private bool isToggle;
+    public bool isToggle;
     public float OxygenLevel;
 
     void Start()

@@ -39,7 +39,7 @@ namespace Managers
 			underAttack = false;
 
 			OnExitSafeZone += () => { if (inSaveZone) StartCoroutine(IEUseOxygen()); };
-			OnEnterSafeZone += () => { inSaveZone = true; StopAllCoroutines(); };
+			OnEnterSafeZone += () => { inSaveZone = true;};
 
 			SetOxygenUsage(OxygenUsageState.IDLE);
 			StartCoroutine(IEUseOxygen());
@@ -110,7 +110,8 @@ namespace Managers
 		}
 		private IEnumerator IEUseOxygen()
 		{
-			Debug.Log("startcorrutine");
+			if (inSaveZone)
+				yield return null;
 
 			inSaveZone = false;
 			yield return new WaitForSeconds(2);

@@ -55,7 +55,6 @@ public class CameraFade : MonoBehaviour
             texture.SetPixel(0, 0, new Color(fadeColor.r, fadeColor.g, fadeColor.b, alpha));
             texture.Apply();
             if (alpha <= 0f || alpha >= 1f) direction = 0;
-            Debug.Log("daeath");
 			GetComponent<Animator>().Play("DeathAnimation");
 		}
     }
