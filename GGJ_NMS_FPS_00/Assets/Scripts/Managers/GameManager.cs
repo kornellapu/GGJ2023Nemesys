@@ -2,7 +2,7 @@ using EvolveGames;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -40,6 +40,13 @@ namespace Managers
 			CurrentState = GameState.GameOver;
 			cameraFade.StartDeathAnimation();
             PlayerController.canMove = false;
+            StartCoroutine(IEGameOver());
         }
+
+        private IEnumerator IEGameOver()
+        {
+            yield return new WaitForSeconds(3);
+			SceneManager.LoadScene("FinalMenu");
+		}
     }
 }
