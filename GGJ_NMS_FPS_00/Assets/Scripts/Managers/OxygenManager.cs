@@ -15,10 +15,13 @@ namespace Managers
 			RUN,
 		}
 
+		[SerializeField] AudioSource footSteps;
+
 		public UnityAction<float> OnChargeCanceld;
 		public UnityAction OnExitSafeZone;
 		public UnityAction OnEnterSafeZone;
 		public UnityAction OnAttack;
+
 		private bool underAttack;
 
 		[HideInInspector] public bool inSaveZone = true;
@@ -31,6 +34,7 @@ namespace Managers
 		public void Init()
 		{
 			player = GameManager.Instance.Player;
+			footSteps = GameObject.Find("StepAudioSource").GetComponent<AudioSource>();
 			stopCharge = false;
 			underAttack = false;
 
@@ -48,12 +52,15 @@ namespace Managers
 			{
 				case OxygenUsageState.IDLE:
 					oxygenUsage = 0.001f + bonusUsage;
+					footSteps.pitch = 0;
 					break;
 				case OxygenUsageState.WALK:
 					oxygenUsage = 0.005f + bonusUsage;
+					footSteps.pitch = 1.3f;
 					break;
 				case OxygenUsageState.RUN:
 					oxygenUsage = 0.01f + bonusUsage;
+					footSteps.pitch = 2f;
 					break;
 				default:
 					oxygenUsage = 0.001f;
