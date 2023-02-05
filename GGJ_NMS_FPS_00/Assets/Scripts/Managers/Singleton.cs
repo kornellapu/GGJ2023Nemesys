@@ -8,7 +8,7 @@ namespace Managers
 
         protected void Awake()
         {
-            Debug.Log(this.gameObject.name);
+            ///Debug.Log(this.gameObject.name);
             if (Instance != null && Instance != this)
 
             {
