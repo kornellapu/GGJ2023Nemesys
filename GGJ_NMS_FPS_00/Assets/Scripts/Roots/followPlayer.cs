@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
 public class followPlayer : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class followPlayer : MonoBehaviour
 
     private void Start()
     {
+        player = GameManager.Instance.PlayerController.GetComponent<CapsuleCollider>();
         refreshLightAmount();
     }
 
@@ -52,7 +54,7 @@ public class followPlayer : MonoBehaviour
             var direction = player.transform.position + new Vector3(0f, playerHeight, 0f) - transform.position;
             forcedBody.AddForce(direction.normalized * thrust*2);
             chasing = true;
-        }
+		}
     }
 
     void OnTriggerStay(Collider other)
@@ -62,11 +64,18 @@ public class followPlayer : MonoBehaviour
             var direction = player.transform.position - transform.position;
             forcedBody.AddForce(direction.normalized * thrust/12);
             chasing = true;
+
+            var distance = Vector3.Distance(other.transform.position, transform.position);
+			if (distance < 2f)
+				OxygenManager.Instance.SetUnderAttack(true);
+            else
+                OxygenManager.Instance.SetUnderAttack(false);
+            
         }
     }
 
     void OnTriggerExit(Collider other)
     {
         chasing = false;
-    }
+	}
 }
