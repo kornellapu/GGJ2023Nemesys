@@ -27,7 +27,10 @@ namespace Managers
 		[HideInInspector] public bool inSaveZone = true;
 
 		private bool stopCharge;
+		private bool running = false;
 		private float oxygenUsage;
+
+		private IEnumerator currentCoroutine = null;
 
 		private Player player;
 
@@ -38,7 +41,7 @@ namespace Managers
 			stopCharge = false;
 			underAttack = false;
 
-			OnExitSafeZone += () => { if (inSaveZone) StartCoroutine(IEUseOxygen()); };
+			OnExitSafeZone += () => { if (inSaveZone) StopAllCoroutines(); StartCoroutine(IEUseOxygen()); };
 			OnEnterSafeZone += () => { inSaveZone = true;};
 
 			SetOxygenUsage(OxygenUsageState.IDLE);
@@ -47,19 +50,19 @@ namespace Managers
 
 		public void SetOxygenUsage(OxygenUsageState state)
 		{
-			float bonusUsage = underAttack ? 0.03f : 0.0f;
+			float bonusUsage = underAttack ? 0.1f : 0.0f;
 			switch (state)
 			{
 				case OxygenUsageState.IDLE:
-					oxygenUsage = 0.001f + bonusUsage;
+					oxygenUsage = 0.01f + bonusUsage;
 					footSteps.pitch = 0;
 					break;
 				case OxygenUsageState.WALK:
-					oxygenUsage = 0.005f + bonusUsage;
+					oxygenUsage = 0.03f + bonusUsage;
 					footSteps.pitch = 1.3f;
 					break;
 				case OxygenUsageState.RUN:
-					oxygenUsage = 0.01f + bonusUsage;
+					oxygenUsage = 0.1f + bonusUsage;
 					footSteps.pitch = 2f;
 					break;
 				default:
@@ -98,9 +101,9 @@ namespace Managers
 
 		private IEnumerator IEChargeOxygenBar(float maxAmount)
 		{
-			while (player.IncreaseOxygenLevelByValue(0.1f) && maxAmount > 0.0f && !stopCharge)
+			while (player.IncreaseOxygenLevelByValue(0.3f) && maxAmount > 0.0f && !stopCharge)
 			{
-				maxAmount -= 0.1f;
+				maxAmount -= 0.3f;
 				yield return new WaitForSeconds(0.01f);
 			}
 
@@ -113,8 +116,13 @@ namespace Managers
 			if (inSaveZone)
 				yield return null;
 
+			if (running)
+				yield return null;
+
+			Debug.Log("sdtart corrutine");
+			running = true;
 			inSaveZone = false;
-			yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(1);
 
 			while (player.IncreaseOxygenLevelByValue(-oxygenUsage))
 			{
