@@ -54,15 +54,15 @@ namespace Managers
 			switch (state)
 			{
 				case OxygenUsageState.IDLE:
-					oxygenUsage = 0.01f + bonusUsage;
+					oxygenUsage = 0.005f + bonusUsage;  ///0.01
 					footSteps.pitch = 0;
 					break;
 				case OxygenUsageState.WALK:
-					oxygenUsage = 0.03f + bonusUsage;
+					oxygenUsage = 0.01f + bonusUsage; ///0.03
 					footSteps.pitch = 1.3f;
 					break;
 				case OxygenUsageState.RUN:
-					oxygenUsage = 0.1f + bonusUsage;
+					oxygenUsage = 0.05f + bonusUsage; ///0.1
 					footSteps.pitch = 2f;
 					break;
 				default:
