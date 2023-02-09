@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -16,6 +17,8 @@ namespace Managers
 		}
 
 		[SerializeField] AudioSource footSteps;
+		[SerializeField] RectTransform Rect_OxygenBar;
+		[SerializeField] Slider Slider_OxygenBar;
 
 		public UnityAction<float> OnChargeCanceld;
 		public UnityAction OnExitSafeZone;
@@ -38,11 +41,12 @@ namespace Managers
 		{
 			player = GameManager.Instance.Player;
 			footSteps = GameObject.Find("StepAudioSource").GetComponent<AudioSource>();
+			Rect_OxygenBar.gameObject.SetActive(false);
 			stopCharge = false;
 			underAttack = false;
 
 			OnExitSafeZone += () => { if (inSaveZone) StopAllCoroutines(); StartCoroutine(IEUseOxygen()); };
-			OnEnterSafeZone += () => { inSaveZone = true;};
+			OnEnterSafeZone += () => { inSaveZone = true; };
 
 			SetOxygenUsage(OxygenUsageState.IDLE);
 			StartCoroutine(IEUseOxygen());
@@ -99,11 +103,22 @@ namespace Managers
 			OnExitSafeZone.Invoke();
 		}
 
+		public void ShowOxygenBarUI(bool state, float amount = 100)
+		{
+			if (Rect_OxygenBar.gameObject.activeInHierarchy == state)
+				return;
+			Rect_OxygenBar.gameObject.SetActive(state);
+			Slider_OxygenBar.value = amount;
+		}
+
 		private IEnumerator IEChargeOxygenBar(float maxAmount)
 		{
+			Rect_OxygenBar.gameObject.SetActive(true);
+
 			while (player.IncreaseOxygenLevelByValue(0.3f) && maxAmount > 0.0f && !stopCharge)
 			{
 				maxAmount -= 0.3f;
+				Slider_OxygenBar.value -= 0.3f;
 				yield return new WaitForSeconds(0.01f);
 			}
 
@@ -119,9 +134,9 @@ namespace Managers
 			if (running)
 				yield return null;
 
-			Debug.Log("sdtart corrutine");
 			running = true;
 			inSaveZone = false;
+			Rect_OxygenBar.gameObject.SetActive(false);
 			yield return new WaitForSeconds(1);
 
 			while (player.IncreaseOxygenLevelByValue(-oxygenUsage))

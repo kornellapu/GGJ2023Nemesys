@@ -49,4 +49,14 @@ public class OxygenBar : MonoBehaviour, IInteractable
     {
         isToggle = state;
     }
+
+    public void Hover()
+    {
+        OxygenManager.Instance.ShowOxygenBarUI(true, OxygenLevel);
+    }
+
+    public void CancelHover()
+    {
+		OxygenManager.Instance.ShowOxygenBarUI(false);
+	}
 }

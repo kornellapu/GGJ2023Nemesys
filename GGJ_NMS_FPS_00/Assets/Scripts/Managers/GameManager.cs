@@ -1,4 +1,5 @@
 using EvolveGames;
+using Interactions;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -46,6 +47,8 @@ namespace Managers
         private IEnumerator IEGameOver()
         {
             yield return new WaitForSeconds(3);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
 			SceneManager.LoadScene("FinalMenu");
 		}
     }

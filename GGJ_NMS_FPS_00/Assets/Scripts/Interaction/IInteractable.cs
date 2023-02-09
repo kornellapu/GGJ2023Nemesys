@@ -8,6 +8,10 @@ namespace Interactions
 
         public void Cancel();
 
-        public void Toggle(bool state);
+		public void Hover();
+
+		public void CancelHover();
+
+		public void Toggle(bool state);
     } 
 }

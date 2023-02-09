@@ -27,23 +27,25 @@ namespace Interactions
 
             RaycastHit hit;
 
-            if (Physics.Raycast(characterCamera.transform.position, characterCamera.transform.forward, out hit, 10, interactableLayerMask))
+            if (Physics.Raycast(characterCamera.transform.position, characterCamera.transform.forward, out hit, 2, interactableLayerMask))
             {
                 interactable = hit.collider.GetComponent<IInteractable>();
                 if (interactable == null)
                     return;
 
                 if (Input.GetMouseButtonDown(0))
-                    interactable.Interact();
-
+					interactable.Interact();
+                    
                 if (Input.GetMouseButtonUp(0))
-                    interactable.Cancel();
+					interactable.Cancel();
 
+                interactable.Hover();
             }
             else if (interactable != null)
             {
                 interactable.Cancel();
-                interactable = null;
+				interactable.CancelHover();
+				interactable = null;
             }
         }
     }

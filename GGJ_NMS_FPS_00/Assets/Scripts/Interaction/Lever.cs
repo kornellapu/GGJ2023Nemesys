@@ -70,4 +70,14 @@ public class Lever : MonoBehaviour, IInteractable
 	{
 		isON = state;
 	}
+
+	public void Hover()
+	{
+
+	}
+
+	public void CancelHover()
+	{
+
+	}
 }

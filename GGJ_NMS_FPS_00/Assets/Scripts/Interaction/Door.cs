@@ -38,4 +38,14 @@ public class Door : MonoBehaviour, IInteractable
     {
         isOpen = state;
     }
+
+    public void Hover()
+    {
+
+    }
+
+    public void CancelHover()
+    {
+
+    }
 }
