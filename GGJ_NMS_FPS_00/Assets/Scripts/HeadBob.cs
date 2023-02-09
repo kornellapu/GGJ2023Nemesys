@@ -10,7 +10,7 @@ namespace EvolveGames
         [Header("HeadBob Effect")]
         [SerializeField] bool Enabled = true;
         [Space, Header("Main")]
-        [SerializeField, Range(0.001f, 0.01f)] float Amount = 0.00484f;
+        [SerializeField, Range(0.01f, 0.04f)] float Amount = 0.00484f;  ///Range(0.001f, 0.01f)
         [SerializeField, Range(10f, 30f)] float Frequency = 16.0f;
         [SerializeField, Range(100f, 10f)] float Smooth = 44.7f;
         [Header("RoationMovement")]
