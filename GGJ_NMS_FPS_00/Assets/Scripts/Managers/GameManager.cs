@@ -47,6 +47,9 @@ namespace Managers
 
 		private void GameOver()
 		{
+			if (!PlayerController.canMove)
+				return;
+
 			CurrentState = GameState.GameOver;
 			cameraFade.StartDeathAnimation();
 			PlayerController.canMove = false;
@@ -55,17 +58,17 @@ namespace Managers
 
 		public void ActivateGeneratorLever(Lever lever)
 		{
-			Debug.LogError(GeneratorLevers.FindAll(x => x.ClickedOnce == true).Count);
 			if (GeneratorLevers.FindAll(x => x.ClickedOnce == true).Count >= 2)
-			{
 				OnGameOver.Invoke(true);
-			}
 		}
 
 		private void Escaped()
 		{
 			Rect_InGame_UI.gameObject.SetActive(false);
 			Rect_End_UI.gameObject.SetActive(true);
+			PlayerController.canMove = false;
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 		}
 
 		private IEnumerator IEGameOver()
