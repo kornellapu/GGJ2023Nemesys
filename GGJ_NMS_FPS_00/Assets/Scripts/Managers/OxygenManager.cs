@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ namespace Managers
 		[SerializeField] AudioSource footSteps;
 		[SerializeField] RectTransform Rect_OxygenBar;
 		[SerializeField] Slider Slider_OxygenBar;
+		[SerializeField] TextMeshProUGUI Text_OxygenPercent;
 
 		public UnityAction<float> OnChargeCanceld;
 		public UnityAction OnExitSafeZone;
@@ -32,8 +34,6 @@ namespace Managers
 		private bool stopCharge;
 		private bool running = false;
 		private float oxygenUsage;
-
-		private IEnumerator currentCoroutine = null;
 
 		private Player player;
 
@@ -109,6 +109,7 @@ namespace Managers
 				return;
 			Rect_OxygenBar.gameObject.SetActive(state);
 			Slider_OxygenBar.value = amount;
+			Text_OxygenPercent.text = $"{Math.Floor(Slider_OxygenBar.value)} %";
 		}
 
 		private IEnumerator IEChargeOxygenBar(float maxAmount)
@@ -119,6 +120,7 @@ namespace Managers
 			{
 				maxAmount -= 0.3f;
 				Slider_OxygenBar.value -= 0.3f;
+				Text_OxygenPercent.text = $"{Math.Floor(Slider_OxygenBar.value)} %";
 				yield return new WaitForSeconds(0.01f);
 			}
 
@@ -144,7 +146,7 @@ namespace Managers
 				yield return new WaitForSeconds(0.01f);
 			}
 
-			GameManager.Instance.OnGameOver.Invoke();
+			GameManager.Instance.OnGameOver.Invoke(false);
 		}
 	}
 

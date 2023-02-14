@@ -4,6 +4,7 @@ using UnityEngine;
 using Interactions;
 using UnityEngine.Events;
 using System;
+using Managers;
 
 public class Lever : MonoBehaviour, IInteractable
 {
@@ -14,12 +15,14 @@ public class Lever : MonoBehaviour, IInteractable
 	[SerializeField] Material[] Materials;
 	[SerializeField] bool disableAfterInteract = false;
 
-	public bool isON { get; private set; }
+	public bool isON;
+	public bool ClickedOnce = false;
 	public bool Interactable = true;
 
 	private void Start()
 	{
 		isON = false;
+		ClickedOnce = false;
 		SwapMaterial();
 		gameObject.layer = LayerMask.NameToLayer("Interactable");
 	}
@@ -44,6 +47,8 @@ public class Lever : MonoBehaviour, IInteractable
 
 		if (disableAfterInteract)
 			Interactable = false;
+		ClickedOnce = true;
+		GameManager.Instance.ActivateGeneratorLever(this);
 	}
 
 	private void SwapMaterial()
@@ -56,8 +61,9 @@ public class Lever : MonoBehaviour, IInteractable
 	public void ActivateLever()
 	{
 		Interactable = true;
+
 		Toggle(!isON);
-		SwapMaterial();
+		SwapMaterial();	
 	}
 
 	public void Cancel()

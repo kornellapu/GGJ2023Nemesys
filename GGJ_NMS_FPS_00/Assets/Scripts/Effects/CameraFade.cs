@@ -30,7 +30,7 @@ public class CameraFade : MonoBehaviour
     {
         if (direction == 0 && Input.GetKeyDown(key))
         {
-            GameManager.Instance.OnGameOver.Invoke();
+            GameManager.Instance.OnGameOver.Invoke(false);
         }
     }
 

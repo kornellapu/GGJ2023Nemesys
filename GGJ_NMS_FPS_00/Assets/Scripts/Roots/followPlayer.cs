@@ -51,7 +51,7 @@ public class followPlayer : MonoBehaviour
     {
         if(other == player)
         {
-            var direction = player.transform.position + new Vector3(0f, playerHeight, 0f) - transform.position;
+			var direction = player.transform.position + new Vector3(0f, playerHeight, 0f) - transform.position;
             forcedBody.AddForce(direction.normalized * thrust*2);
             chasing = true;
 		}
@@ -70,8 +70,7 @@ public class followPlayer : MonoBehaviour
 				OxygenManager.Instance.SetUnderAttack(true);
             else
                 OxygenManager.Instance.SetUnderAttack(false);
-            
-        }
+		}
     }
 
     void OnTriggerExit(Collider other)

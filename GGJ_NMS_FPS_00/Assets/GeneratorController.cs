@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GeneratorController : MonoBehaviour
 {
-    public bool enabled = false;
+    public bool isEnabled = false;
 
     public Material enabledMaterial;
     public Material disabledMaterial;
@@ -12,7 +12,7 @@ public class GeneratorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enabled = false;
+        isEnabled = false;
         changeMaterial();
     }
 
@@ -23,7 +23,7 @@ public class GeneratorController : MonoBehaviour
 
     public void toggle()
     {
-        enabled = !enabled;
+        isEnabled = !isEnabled;
         changeMaterial();
     }
 
@@ -31,7 +31,7 @@ public class GeneratorController : MonoBehaviour
     {
 
         int numOfChildren = transform.childCount;
-        Material toChange = enabled ? enabledMaterial : disabledMaterial;
+        Material toChange = isEnabled ? enabledMaterial : disabledMaterial;
 
         for (int i = 0; i < numOfChildren; i++)
         {
